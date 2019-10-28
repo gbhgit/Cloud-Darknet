@@ -163,20 +163,19 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     int count = 0;
     //while(i*imgs < N*120){
 
-    bool th_run = true;
+    int th_run = 1;
     float th_hour = 11;
-    float th_maxTimeSec = 60;//th_hour*60*60;
+    float th_maxTimeSec = 60; //th_hour*60*60;
+    double th_t_start = what_time_is_it_now();
     double th_elapsed_time_sec = 0;
-    auto th_t_start = std::chrono::high_resolution_clock::now();
-    while (get_current_batch(net) < net.max_batches && th_run) {
 
-      auto th_t_end = std::chrono::high_resolution_clock::now();
-      th_elapsed_time_sec = std::chrono::duration<double, std::milli>(th_t_end-th_t_start).count();
-      th_elapsed_time_sec = th_elapsed_time_sec/1000;
-      if(th_elapsed_time_sec>th_maxTimeSec){
-        th_run = false;
+    while (get_current_batch(net) < net.max_batches && th_run==1) {
+
+      th_elapsed_time_sec = (what_time_is_it_now() - th_t_start);
+      if(th_elapsed_time_sec > th_maxTimeSec){
+        th_run = 0;
       }
-      printf("%f\n",th_elapsed_time_sec);
+      printf("th_elapsed_time_sec: %f\n",th_elapsed_time_sec);
 
         if (l.random && count++ % 10 == 0) {
             printf("Resizing\n");
@@ -336,9 +335,10 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
 
     }
     // rodar o comando para subir as coisas no drive
-    string th_command = "python /content/darknet/uploadDriver.py";
-    printf("%s\n",th_command.c_str());
-    system(th_command.c_str());
+    char th_buff[256];
+    sprintf(th_buff, "python /content/darknet/uploadDriver.py");
+    printf("%s\n",th_buff);
+    system(th_buff);
 
 #ifdef GPU
     if (ngpus != 1) sync_nets(nets, ngpus, 0);
