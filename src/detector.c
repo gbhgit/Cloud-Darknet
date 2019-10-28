@@ -165,7 +165,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
 
     int th_run = 1;
     float th_hour = 11;
-    float th_maxTimeSec = 60; //th_hour*60*60;
+    float th_maxTimeSec = th_hour*60*60;
     double th_t_start = what_time_is_it_now();
     double th_elapsed_time_sec = 0;
 
