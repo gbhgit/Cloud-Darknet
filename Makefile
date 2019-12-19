@@ -44,8 +44,8 @@ OS := $(shell uname)
 
 
 VPATH=./src/
-EXEC=./obj/darknet
-OBJDIR=./obj/
+EXEC=./bin/darknet
+OBJDIR=./bin/
 
 ifeq ($(LIBSO), 1)
 LIBNAMESO=libdarknet.so
@@ -127,7 +127,7 @@ endif
 OBJS = $(addprefix $(OBJDIR), $(OBJ))
 DEPS = $(wildcard src/*.h) Makefile include/darknet.h
 
-all: obj backup results $(EXEC) $(LIBNAMESO) $(APPNAMESO)
+all: bin backup results $(EXEC) $(LIBNAMESO) $(APPNAMESO)
 
 ifeq ($(LIBSO), 1)
 CFLAGS+= -fPIC
@@ -151,8 +151,8 @@ $(OBJDIR)%.o: %.cpp $(DEPS)
 $(OBJDIR)%.o: %.cu $(DEPS)
 	$(NVCC) $(ARCH) $(COMMON) --compiler-options "$(CFLAGS)" -c $< -o $@
 
-obj:
-	mkdir -p obj
+bin:
+	mkdir -p bin
 backup:
 	mkdir -p backup
 results:
@@ -166,4 +166,4 @@ clean:
 	rm -rf $(OBJS) $(EXEC) $(LIBNAMESO) $(APPNAMESO)
 	rm -rf backup
 	rm -rf results
-	rm -rf obj
+	rm -rf bin
