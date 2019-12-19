@@ -162,30 +162,7 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
     double time;
     int count = 0;
     //while(i*imgs < N*120){
-    
-    char th_buff[256];
-    int th_run = 1;
-    float th_hour = 11;
-    float th_maxTimeSec = th_hour*60*60;
-    double th_t_start = what_time_is_it_now();
-    double th_elapsed_time_sec = 0;
-    int th_count = 0;
-    int th_value = 0;
-    while (get_current_batch(net) < net.max_batches && th_run==1) {
-
-      th_elapsed_time_sec = (what_time_is_it_now() - th_t_start);
-      if(th_elapsed_time_sec > th_maxTimeSec){
-        th_run = 0;
-      }
-      th_value = ( th_elapsed_time_sec/(1*60*60) );
-      if( th_value > th_count){
-        th_count = th_count + 1;
-        sprintf(th_buff, "python /content/darknet/uploadDriver.py");
-        printf("%s\n",th_buff);
-        system(th_buff);
-      }
-      printf("th_elapsed_time_sec: %f\n",th_elapsed_time_sec);
-
+    while (get_current_batch(net) < net.max_batches) {
         if (l.random && count++ % 10 == 0) {
             printf("Resizing\n");
             float random_val = rand_scale(1.4);    // *x or /x
@@ -327,6 +304,10 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
             char buff[256];
             sprintf(buff, "%s/%s_%d.weights", backup_directory, base, i);
             save_weights(net, buff);
+
+            sprintf(buff, "python /content/darknet/resources/scripts/uploadDriver.py");
+            printf("%s\n",buff);
+            system(buff);
         }
 
         if (i >= (iter_save_last + 100) || i % 100 == 0) {
@@ -339,21 +320,16 @@ void train_detector(char *datacfg, char *cfgfile, char *weightfile, int *gpus, i
             save_weights(net, buff);
         }
         free_data(train);
-
-        // check timer to send files and kill application
-
     }
-    // rodar o comando para subir as coisas no drive
-    sprintf(th_buff, "python /content/darknet/uploadDriver.py");
-    printf("%s\n",th_buff);
-    system(th_buff);
-
 #ifdef GPU
     if (ngpus != 1) sync_nets(nets, ngpus, 0);
 #endif
     char buff[256];
     sprintf(buff, "%s/%s_final.weights", backup_directory, base);
     save_weights(net, buff);
+    sprintf(buff, "python /content/darknet/resources/scripts/uploadDriver.py");
+    printf("%s\n",buff);
+    system(buff);
 
 #ifdef OPENCV
     release_mat(&img);
