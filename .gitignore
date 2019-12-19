@@ -9,6 +9,8 @@
 *.dll
 *.lib
 *.dylib
+*.png
+*.jpg
 mnist/
 caffe/
 grasp/
