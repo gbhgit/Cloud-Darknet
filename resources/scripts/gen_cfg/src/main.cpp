@@ -14,7 +14,7 @@
 
 using namespace std;
 
-void write_alexnet(int names){
+void write_alexnet(int classes){
   FILE* fp = fopen("../../cfg/alexnet.cfg","w");
   fprintf(fp, "[net]\n");
   fprintf(fp, "# Training\n");
@@ -33,7 +33,7 @@ void write_alexnet(int names){
   fprintf(fp, "learning_rate=0.01\n");
   fprintf(fp, "policy=poly\n");
   fprintf(fp, "power=4\n");
-  fprintf(fp, "max_batches=800000\n");
+  fprintf(fp, "max_batches=%d\n", classes*2000);
   fprintf(fp, "\n");
   fprintf(fp, "angle=7\n");
   fprintf(fp, "hue = .1\n");
@@ -106,7 +106,7 @@ void write_alexnet(int names){
   fprintf(fp, "probability=.5\n");
   fprintf(fp, "\n");
   fprintf(fp, "[connected]\n");
-  fprintf(fp, "output=1000\n");
+  fprintf(fp, "output=%d\n",classes);
   fprintf(fp, "activation=linear\n");
   fprintf(fp, "\n");
   fprintf(fp, "[softmax]\n");
@@ -10898,9 +10898,9 @@ int main(int argc, char** argv){
   	  return -1;
     }
 
-    int names = atoi(argv[2]);
+    int classes = atoi(argv[2]);
 
-    write_alexnet(names);
+    write_alexnet(classes);
     //write_darknet();
     //write_darknet19();
     //write_darknet19_448();
