@@ -11,6 +11,7 @@
 *.dylib
 *.png
 *.jpg
+CFG
 mnist/
 caffe/
 grasp/

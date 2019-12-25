@@ -10863,36 +10863,56 @@ void write_vgg_16(){
 
 int main(int argc, char** argv){
 
-  write_alexnet();
-  write_darknet();
-  write_darknet19();
-  write_darknet19_448();
-  write_darknet53();
-  write_darknet53_448();
-  write_densenet201();
-  write_extraction();
-  write_resnet18();
-  write_resnet34();
-  write_resnet50();
-  write_resnet101();
-  write_resnet152();
-  write_resnext50();
-  write_resnext101_32x4d();
-  write_resnext152_32x4d();
-  write_vgg_16();
-
-  ifstream file(argv[1]);
-  string name(argv[2]);
-
-  string str;
-  FILE* fp = fopen( "Getcode.txt", "a");
-  fprintf(fp, "void write_%s(){ \n", name.c_str());
-  fprintf(fp, "FILE* fp = fopen(\"%s.cfg\",\"w\");\n", name.c_str());
-  while(getline(file, str)){
-    fprintf(fp, "fprintf(fp, \"%s\\n\");\n", str.c_str());
+  if(argc<2){
+    cout << "\n methods: genCFG, genCode is accepted !\n" << endl;
+    return -1;
   }
-  fprintf(fp, "fclose(fp);\n");
-  fprintf(fp, "}");
-  fclose(fp);
+
+  string arg(argv[1]);
+  if(arg=="genCode"){
+
+    if(argc!=4){
+      cout<<"./CFG genCode <InputCFG> <MethodName>"<<endl;
+  	  cout<<"example: ./CFG genCode alexnet.cfg alexnet"<<endl;
+  	  return -1;
+    }
+
+    string str;
+    ifstream file(argv[2]);
+    string name(argv[3]);
+    FILE* fp = fopen( "Code.txt", "a");
+    fprintf(fp, "void write_%s(){ \n", name.c_str());
+    fprintf(fp, "FILE* fp = fopen(\"%s.cfg\",\"w\");\n", name.c_str());
+    while(getline(file, str)){
+      fprintf(fp, "fprintf(fp, \"%s\\n\");\n", str.c_str());
+    }
+    fprintf(fp, "fclose(fp);\n");
+    fprintf(fp, "}");
+    fclose(fp);
+  }
+  else if(arg=="genCFG"){
+
+    write_alexnet();
+    write_darknet();
+    write_darknet19();
+    write_darknet19_448();
+    write_darknet53();
+    write_darknet53_448();
+    write_densenet201();
+    write_extraction();
+    write_resnet18();
+    write_resnet34();
+    write_resnet50();
+    write_resnet101();
+    write_resnet152();
+    write_resnext50();
+    write_resnext101_32x4d();
+    write_resnext152_32x4d();
+    write_vgg_16();
+  }
+  else{
+    cout << "\n methods: genCFG, genCode is accepted !\n" << endl;
+  }
+
   return 0;
 }

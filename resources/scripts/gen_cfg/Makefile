@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -g -Wall
 SRCS += src/main.cpp
-PROG = createCFG
+PROG = CFG
 
 CFLAGS_CPP= -std=c++11
 
