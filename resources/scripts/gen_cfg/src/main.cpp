@@ -238,16 +238,16 @@ void write_darknet(){
   fprintf(fp, "\n");
   fclose(fp);
 }
-void write_darknet19(){
-  FILE* fp = fopen("darknet19.cfg","w");
+void write_darknet19(int classes){
+  FILE* fp = fopen("../../cfg/darknet19.cfg","w");
   fprintf(fp, "[net]\n");
   fprintf(fp, "# Training\n");
-  fprintf(fp, "#batch=128\n");
-  fprintf(fp, "#subdivisions=2\n");
+  fprintf(fp, "batch=128\n");
+  fprintf(fp, "subdivisions=2\n");
   fprintf(fp, "\n");
   fprintf(fp, "# Testing\n");
-  fprintf(fp, " batch=1\n");
-  fprintf(fp, " subdivisions=1\n");
+  fprintf(fp, "# batch=1\n");
+  fprintf(fp, "# subdivisions=1\n");
   fprintf(fp, "\n");
   fprintf(fp, "height=256\n");
   fprintf(fp, "width=256\n");
@@ -261,7 +261,7 @@ void write_darknet19(){
   fprintf(fp, "learning_rate=0.1\n");
   fprintf(fp, "policy=poly\n");
   fprintf(fp, "power=4\n");
-  fprintf(fp, "max_batches=800000\n");
+  fprintf(fp, "max_batches=%d\n",classes*2000);
   fprintf(fp, "\n");
   fprintf(fp, "angle=7\n");
   fprintf(fp, "hue=.1\n");
@@ -434,7 +434,7 @@ void write_darknet19(){
   fprintf(fp, "activation=leaky\n");
   fprintf(fp, "\n");
   fprintf(fp, "[convolutional]\n");
-  fprintf(fp, "filters=1000\n");
+  fprintf(fp, "filters=%d\n",classes);
   fprintf(fp, "size=1\n");
   fprintf(fp, "stride=1\n");
   fprintf(fp, "pad=1\n");
@@ -1218,16 +1218,16 @@ void write_darknet53(){
   fprintf(fp, "\n");
   fclose(fp);
 }
-void write_darknet53_448(){
-  FILE* fp = fopen("darknet53_448.cfg","w");
+void write_darknet53_448(int classes){
+  FILE* fp = fopen("../../cfg/darknet53_448.cfg","w");
   fprintf(fp, "[net]\n");
   fprintf(fp, "# Training - start training with darknet53.weights\n");
-  fprintf(fp, "# batch=128\n");
-  fprintf(fp, "# subdivisions=8\n");
+  fprintf(fp, "batch=128\n");
+  fprintf(fp, "subdivisions=8\n");
   fprintf(fp, "\n");
   fprintf(fp, "# Testing\n");
-  fprintf(fp, "batch=1\n");
-  fprintf(fp, "subdivisions=1\n");
+  fprintf(fp, "# batch=1\n");
+  fprintf(fp, "# subdivisions=1\n");
   fprintf(fp, "\n");
   fprintf(fp, "height=448\n");
   fprintf(fp, "width=448\n");
@@ -1238,7 +1238,7 @@ void write_darknet53_448(){
   fprintf(fp, "learning_rate=0.001\n");
   fprintf(fp, "policy=poly\n");
   fprintf(fp, "power=4\n");
-  fprintf(fp, "max_batches=100000\n");
+  fprintf(fp, "max_batches=%d\n", classes*2000);
   fprintf(fp, "momentum=0.9\n");
   fprintf(fp, "decay=0.0005\n");
   fprintf(fp, "\n");
@@ -1770,7 +1770,7 @@ void write_darknet53_448(){
   fprintf(fp, "[avgpool]\n");
   fprintf(fp, "\n");
   fprintf(fp, "[convolutional]\n");
-  fprintf(fp, "filters=1000\n");
+  fprintf(fp, "filters=%d\n",classes);
   fprintf(fp, "size=1\n");
   fprintf(fp, "stride=1\n");
   fprintf(fp, "pad=1\n");
@@ -10901,6 +10901,8 @@ int main(int argc, char** argv){
     int classes = atoi(argv[2]);
 
     write_alexnet(classes);
+    write_darknet19(classes);
+    write_darknet53_448(classes);
     //write_darknet();
     //write_darknet19();
     //write_darknet19_448();
