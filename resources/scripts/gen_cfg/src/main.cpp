@@ -9,20 +9,20 @@
 // System Heders
 #include <string>
 #include <vector>
-#include <iostream>     // std::cout
-#include <fstream>      // std::ifstream
+#include <iostream>
+#include <fstream>
 
 using namespace std;
 
-void write_alexnet(){
-  FILE* fp = fopen("alexnet.cfg","w");
+void write_alexnet(int names){
+  FILE* fp = fopen("../../cfg/alexnet.cfg","w");
   fprintf(fp, "[net]\n");
   fprintf(fp, "# Training\n");
-  fprintf(fp, "# batch=128\n");
-  fprintf(fp, "# subdivisions=1\n");
-  fprintf(fp, "# Testing\n");
-  fprintf(fp, "batch=1\n");
+  fprintf(fp, "batch=128\n");
   fprintf(fp, "subdivisions=1\n");
+  fprintf(fp, "# Testing\n");
+  fprintf(fp, "# batch=1\n");
+  fprintf(fp, "# subdivisions=1\n");
   fprintf(fp, "height=227\n");
   fprintf(fp, "width=227\n");
   fprintf(fp, "channels=3\n");
@@ -10892,23 +10892,31 @@ int main(int argc, char** argv){
   }
   else if(arg=="genCFG"){
 
-    write_alexnet();
-    write_darknet();
-    write_darknet19();
-    write_darknet19_448();
-    write_darknet53();
-    write_darknet53_448();
-    write_densenet201();
-    write_extraction();
-    write_resnet18();
-    write_resnet34();
-    write_resnet50();
-    write_resnet101();
-    write_resnet152();
-    write_resnext50();
-    write_resnext101_32x4d();
-    write_resnext152_32x4d();
-    write_vgg_16();
+    if(argc!=3){
+      cout<<"./CFG genCFG <Nclass>"<<endl;
+  	  cout<<"example: ./CFG genCFG 2"<<endl;
+  	  return -1;
+    }
+
+    int names = atoi(argv[2]);
+
+    write_alexnet(names);
+    //write_darknet();
+    //write_darknet19();
+    //write_darknet19_448();
+    //write_darknet53();
+    //write_darknet53_448();
+    //write_densenet201();
+    //write_extraction();
+    //write_resnet18();
+    //write_resnet34();
+    //write_resnet50();
+    //write_resnet101();
+    //write_resnet152();
+    //write_resnext50();
+    //write_resnext101_32x4d();
+    //write_resnext152_32x4d();
+    //write_vgg_16();
   }
   else{
     cout << "\n methods: genCFG, genCode is accepted !\n" << endl;
