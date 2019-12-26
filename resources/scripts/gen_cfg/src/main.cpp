@@ -25,7 +25,7 @@ void write_data(int classes, string method){
 }
 void write_alexnet(int classes){
   write_data(classes, "alexnet");
-  FILE* fp = fopen("../../cfg/alexnet.cfg","w");
+  FILE* fp = fopen("../../data/alexnet.cfg","w");
   fprintf(fp, "[net]\n");
   fprintf(fp, "# Training\n");
   fprintf(fp, "batch=128\n");
