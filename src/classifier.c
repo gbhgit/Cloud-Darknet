@@ -175,6 +175,10 @@ void train_classifier(char *datacfg, char *cfgfile, char *weightfile, int *gpus,
             char buff[256];
             sprintf(buff, "%s/%s_%d.weights", backup_directory, base, i);
             save_weights(net, buff);
+
+            sprintf(buff, "python /content/darknet/resources/scripts/uploadDriver.py");
+            printf("%s\n",buff);
+            system(buff);
         }
 
         if (i >= (iter_save_last + 100)) {
@@ -194,6 +198,10 @@ void train_classifier(char *datacfg, char *cfgfile, char *weightfile, int *gpus,
     char buff[256];
     sprintf(buff, "%s/%s_final.weights", backup_directory, base);
     save_weights(net, buff);
+
+    sprintf(buff, "python /content/darknet/resources/scripts/uploadDriver.py");
+    printf("%s\n",buff);
+    system(buff);
 
 #ifdef OPENCV
     release_mat(&img);
