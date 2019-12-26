@@ -14,7 +14,17 @@
 
 using namespace std;
 
+void write_data(int classes, string method){
+  FILE* fp = fopen( string("../../data/" + method + ".data").c_str(),"w");
+  fprintf(fp, "classes=%d\n",classes);
+  fprintf(fp, "train  = resources/data/train.list\n");
+  fprintf(fp, "valid  = resources/data/test.list\n");
+  fprintf(fp, "labels = resources/data/labels.txt\n");
+  fprintf(fp, "backup = backup/\n");
+  fprintf(fp, "top=2\n");
+}
 void write_alexnet(int classes){
+  write_data(classes, "alexnet");
   FILE* fp = fopen("../../cfg/alexnet.cfg","w");
   fprintf(fp, "[net]\n");
   fprintf(fp, "# Training\n");
@@ -114,6 +124,7 @@ void write_alexnet(int classes){
   fprintf(fp, "\n");
   fclose(fp);
 }
+
 void write_darknet(){
   FILE* fp = fopen("darknet.cfg","w");
   fprintf(fp, "[net]\n");
@@ -10899,10 +10910,10 @@ int main(int argc, char** argv){
     }
 
     int classes = atoi(argv[2]);
-
     write_alexnet(classes);
-    write_darknet19(classes);
-    write_darknet53_448(classes);
+
+    //write_darknet19(classes);
+    //write_darknet53_448(classes);
     //write_darknet();
     //write_darknet19();
     //write_darknet19_448();
