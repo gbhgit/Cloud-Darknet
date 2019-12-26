@@ -1,6 +1,0 @@
-classes=2
-train  = resources/data/train.list
-valid  = resources/data/test.list
-labels = resources/data/labels.txt
-backup = backup/
-top=2
