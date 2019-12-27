@@ -23,7 +23,7 @@ void write_data(int classes, string method){
   fprintf(fp, "backup = backup/\n");
   fprintf(fp, "top=2\n");
 }
-void write_alexnet(int classes){
+void write_alexnet(int classes, int height, int width){
   write_data(classes, "alexnet");
   FILE* fp = fopen("../../data/alexnet.cfg","w");
   fprintf(fp, "[net]\n");
@@ -33,8 +33,8 @@ void write_alexnet(int classes){
   fprintf(fp, "# Testing\n");
   fprintf(fp, "# batch=1\n");
   fprintf(fp, "# subdivisions=1\n");
-  fprintf(fp, "height=227\n");
-  fprintf(fp, "width=227\n");
+  fprintf(fp, "height=%d\n",height);
+  fprintf(fp, "width=%d\n",width);
   fprintf(fp, "channels=3\n");
   fprintf(fp, "momentum=0.9\n");
   fprintf(fp, "decay=0.0005\n");
@@ -10904,13 +10904,15 @@ int main(int argc, char** argv){
   else if(arg=="genCFG"){
 
     if(argc!=3){
-      cout<<"./CFG genCFG <Nclass>"<<endl;
-  	  cout<<"example: ./CFG genCFG 2"<<endl;
+      cout<<"./CFG genCFG <Nclass> <height> <width>"<<endl;
+  	  cout<<"example: ./CFG genCFG 2 128 128"<<endl;
   	  return -1;
     }
-
+    
     int classes = atoi(argv[2]);
-    write_alexnet(classes);
+    int height  = atoi(argv[3]);
+    int width   = atoi(argv[4]);
+    write_alexnet(classes, height, width);
 
     //write_darknet19(classes);
     //write_darknet53_448(classes);
