@@ -10903,7 +10903,7 @@ int main(int argc, char** argv){
   }
   else if(arg=="genCFG"){
 
-    if(argc!=3){
+    if(argc!=5){
       cout<<"./CFG genCFG <Nclass> <height> <width>"<<endl;
   	  cout<<"example: ./CFG genCFG 2 128 128"<<endl;
   	  return -1;
