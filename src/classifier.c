@@ -176,6 +176,16 @@ void train_classifier(char *datacfg, char *cfgfile, char *weightfile, int *gpus,
             sprintf(buff, "%s/%s_%d.weights", backup_directory, base, i);
             save_weights(net, buff);
 
+            // == Delete Previous Weights
+            sprintf(buff, "%s/%s_%d.weights", backup_directory, base, i-1000);
+            if (remove(buff) == 0){
+              printf("Deleted successfully");
+            }
+            else{
+              printf("Unable to delete the file");
+            }
+
+            // == Upload Weights
             sprintf(buff, "python /content/darknet/resources/scripts/uploadDriver.py");
             printf("%s\n",buff);
             system(buff);
