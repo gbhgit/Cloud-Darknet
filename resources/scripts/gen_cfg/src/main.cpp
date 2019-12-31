@@ -43,7 +43,7 @@ void write_alexnet(int classes, int height, int width){
   fprintf(fp, "learning_rate=0.01\n");
   fprintf(fp, "policy=poly\n");
   fprintf(fp, "power=4\n");
-  fprintf(fp, "max_batches=%d\n", classes*2000);
+  fprintf(fp, "max_batches=%d\n", classes*4000);
   fprintf(fp, "\n");
   fprintf(fp, "angle=7\n");
   fprintf(fp, "hue = .1\n");
@@ -10912,8 +10912,8 @@ int main(int argc, char** argv){
     int classes = atoi(argv[2]);
     int height  = atoi(argv[3]);
     int width   = atoi(argv[4]);
-    //write_alexnet(classes, height, width);
-    write_darknet53_448(classes, height, width);
+    write_alexnet(classes, height, width);
+    //write_darknet53_448(classes, height, width);
     //write_darknet19(classes);
     //write_darknet53_448(classes);
     //write_darknet();
