@@ -10914,8 +10914,8 @@ int main(int argc, char** argv){
     int classes = atoi(argv[2]);
     int height  = atoi(argv[3]);
     int width   = atoi(argv[4]);
-    write_vgg_16(classes, height, width);
-    //write_alexnet(classes, height, width);
+    //write_vgg_16(classes, height, width);
+    write_alexnet(classes, height, width);
     //write_darknet53_448(classes, height, width);
     //write_darknet19(classes);
     //write_darknet53_448(classes);
